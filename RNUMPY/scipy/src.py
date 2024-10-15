@@ -41,3 +41,8 @@ def _jax_fsolve(func,x0,args,maxfev,tol):
     mesg     = OR.status
 
     return x, infodict, ier, mesg
+
+
+#def dot(x,y):
+    #if not rp.use_jax: return np.dot(x,y)
+    #else: return jnp.dot(x,y) 

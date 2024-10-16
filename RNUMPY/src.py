@@ -52,6 +52,13 @@ def dequals(a,indices,b):
     else: return a.at[indices].divide(b)
 
 # ----------------------------------------------------------------------------------------------------------------------
+#  ndarray
+# ----------------------------------------------------------------------------------------------------------------------  
+
+class ndarray(np.ndarray, j.Array):
+    pass
+
+# ----------------------------------------------------------------------------------------------------------------------
 #  Numpy Functions
 # ----------------------------------------------------------------------------------------------------------------------  
 
@@ -563,7 +570,6 @@ def fromstring(string, dtype=float, count=-1, *, sep):
     if not rp.use_jax: return np.fromstring(string, dtype=dtype, count=-1, sep=sep)
     else: return jnp.fromstring(string, dtype=dtype, count=-1, sep=sep)
 
-
 def array2string(): raise NotImplementedError
 
 def array_repr(arr, max_line_width=None, precision=None, suppress_small=None):
@@ -660,22 +666,699 @@ def full_like(a, fill_value, dtype=None, shape=None, *, device=None):
     else: return jnp.full_like(a, fill_value, dtype=dtype, shape=shape, device=device)
 
 def array(object, dtype=None, copy=True, order='K', ndmin=0, *, device=None):
-    if not rp.use_jax: return np.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndim, device=device)
+    if not rp.use_jax: return np.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin)
     else: return jnp.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndim, device=device)
 
-def 	asarray(a, dtype=None, order=None, *, copy=None, device=None): raise NotImplementedError
-def 	asanyarray	(): raise NotImplementedError
-def 	ascontiguousarray	(): raise NotImplementedError
-def 	asmatrix	(): raise NotImplementedError
-def 	astype	(): raise NotImplementedError
-def 	copy	(): raise NotImplementedError
-def 	frombuffer	(): raise NotImplementedError
-def 	from_dlpack	(): raise NotImplementedError
-def 	fromfile	(): raise NotImplementedError
-def 	fromfunction	(): raise NotImplementedError
-def 	fromiter	(): raise NotImplementedError
-def 	fromstring	(): raise NotImplementedError
-def 	loadtxt	(): raise NotImplementedError
+def asarray(a, dtype=None, order=None, *, copy=None, device=None):
+    if not rp.use_jax: return np.asanyarray(a, dtype=dtype, order=order, device=device, copy=copy)
+    else: return jnp.asarray(a, dtype=dtype, order=order, copy=copy, device=device)
+	
+def asanyarray(): raise NotImplementedError
+
+def ascontiguousarray(): raise NotImplementedError
+
+def asmatrix(): raise NotImplementedError
+
+def astype(x, dtype, /, *, copy=False, device=None)[source]:
+	if not rp.use_jax: return np.astype(x, dtype, copy=copy, device=device)
+	else: return jnp.astype(x, dtype, copy=copy, device=device)
+
+def copy(a, order='K'):
+	if not rp.use_jax: return np.copy(a, order=order)
+	else: return jnp.copy(a, order=order)
+
+def frombuffer(buffer, dtype=float, count=-1, offset=0):
+	if not rp.use_jax: return np.frombuffer(buffer, dtype=dtype, count=count, offset=offset)
+	else: return jnp.frombuffer(buffer, dtype=dtype, count=count, offset=offset)
+
+def from_dlpack(x, /, *, device=None, copy=None):
+	if not rp.use_jax: return np.from_dlpack(x, device=device, copy=copy)
+	else: return jnp.from_dlpack(x, device=device, copy=copy)
+
+def fromfile(): raise NotImplementedError
+
+def fromfunction(function, shape, *, dtype=float', **kwargs):
+	if not rp.use_jax: return np.fromfunction(function, shape, dtype=dtype, like=None, **kwargs
+	else: return jnp.fromfunction(function, shape,dtype=dtype **kwargs)
+
+def fromiter(): raise NotImplementedError
+
+def arange(start, stop=None, step=None, dtype=None, *, device=None):
+	if not rp.use_jax:
+         if stop is not None:
+            return np.arange(start, stop=stop, step=step, dtype=dtype, device=device)
+        else:
+            return np.arange(stop=start, step=step, dtype=dtype, device=device)
+	else: return jnp.arange(start, stop=stop, step=step, dtype=dtype, *, device=device)
+
+def linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0, *, device=None):
+	if not rp.use_jax: return np.linspace(start, stop, num=num, endpoint=endpoint, retstep=retstep, dtype=dtype, axis=axis, device=device)
+	else: return jnp.linspace(start, stop, num=num, endpoint=endpoint, retstep=retstep, dtype=dtype, axis=axis, device=device)
+
+def logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None, axis=0):
+	if not rp.use_jax: return np.logspace(start, stop, num=num, endpoint=endpoint, base=base, dtype=dtype, axis=axis)
+	else: return jnp.logspace(start, stop, num=num, endpoint=endpoint, base=base, dtype=dtype, axis=axis)
+
+def geomspace(start, stop, num=50, endpoint=True, dtype=None, axis=0)):
+	if not rp.use_jax: return np.geomspace(start, stop, num=num, endpoint=endpoint, dtype=dtype, axis=axis)
+	else: return jnp.geomspace(start, stop, num=num, endpoint=endpoint, dtype=dtype, axis=axis)
+
+def meshgrid(*xi, copy=True, sparse=False, indexing='xy'):
+	if not rp.use_jax: return np.meshgrid(*xi, copy=copy, sparse=sparse, indexing=indexing)
+	else: return jnp.meshgrid(*xi, copy=copy, sparse=sparse, indexing=indexing)
+
+def mgrid(): raise NotImplementedError
+
+def ogrid(): raise NotImplementedError
+
+def diag(v, k=0):
+	if not rp.use_jax: return np.diag(v, k=k)
+	else: return jnp.diag(v, k=k)
+
+def diagflat(v, k=0):
+	if not rp.use_jax: return np.diagflat(v, k=k)
+	else: return jnp.diagflatv, k=k)
+
+def tri(N, M=None, k=0, dtype=float):
+	if not rp.use_jax: return np.tri(N, M=M, k=k, dtype=dtype)
+	else: return jnp.tri(N, M=M, k=k, dtype=dtype)
+
+def tril(m, k=0):
+	if not rp.use_jax: return np.tril(m, k=k)
+	else: return jnp.tril(m, k=k)
+
+def triu(m, k=0):
+	if not rp.use_jax: return np.triu(m, k=k)
+	else: return jnp.triu(m, k=k)
+
+def vander(x, N=None, increasing=False):
+	if not rp.use_jax: return np.vander(x, N=N, increasing=increasing)
+	else: return jnp.vander(x, N=N, increasing=increasing)
+
+def bmat(): raise NotImplementedError
+
+# def bitwise_and(*args,**kwargs):
+# 	if not rp.use_jax: return np.bitwise_and(*args,**kwargs)
+# 	else: return jnp.bitwise_and(*args,**kwargs)
+
+# def bitwise_or(*args,**kwargs):
+# 	if not rp.use_jax: return np.bitwise_or(*args,**kwargs)
+# 	else: return jnp.bitwise_or(*args,**kwargs)
+
+# def bitwise_xor(*args,**kwargs):
+# 	if not rp.use_jax: return np.bitwise_xor(*args,**kwargs)
+# 	else: return jnp.bitwise_xor(*args,**kwargs)
+
+# def invert(*args,**kwargs):
+# 	if not rp.use_jax: return np.invert(*args,**kwargs)
+# 	else: return jnp.invert(*args,**kwargs)
+
+# def bitwise_invert(*args,**kwargs):
+# 	if not rp.use_jax: return np.bitwise_invert(*args,**kwargs)
+# 	else: return jnp.bitwise_invert(*args,**kwargs)
+
+# def left_shift(*args,**kwargs):
+# 	if not rp.use_jax: return np.left_shift(*args,**kwargs)
+# 	else: return jnp.left_shift(*args,**kwargs)
+
+# def bitwise_left_shift(*args,**kwargs):
+# 	if not rp.use_jax: return np.bitwise_left_shift(*args,**kwargs)
+# 	else: return jnp.bitwise_left_shift(*args,**kwargs)
+
+# def right_shift(*args,**kwargs):
+# 	if not rp.use_jax: return np.right_shift(*args,**kwargs)
+# 	else: return jnp.right_shift(*args,**kwargs)
+
+# def bitwise_right_shift(*args,**kwargs):
+# 	if not rp.use_jax: return np.bitwise_right_shift(*args,**kwargs)
+# 	else: return jnp.bitwise_right_shift(*args,**kwargs)
+
+# def packbits(*args,**kwargs):
+# 	if not rp.use_jax: return np.packbits(*args,**kwargs)
+# 	else: return jnp.packbits(*args,**kwargs)
+
+# def unpackbits(*args,**kwargs):
+# 	if not rp.use_jax: return np.unpackbits(*args,**kwargs)
+# 	else: return jnp.unpackbits(*args,**kwargs)
+
+# def binary_repr(*args,**kwargs):
+# 	if not rp.use_jax: return np.binary_repr(*args,**kwargs)
+# 	else: return jnp.binary_repr(*args,**kwargs)
+
+# def c_(*args,**kwargs):
+# 	if not rp.use_jax: return np.c_(*args,**kwargs)
+# 	else: return jnp.c_(*args,**kwargs)
+
+# def r_(*args,**kwargs):
+# 	if not rp.use_jax: return np.r_(*args,**kwargs)
+# 	else: return jnp.r_(*args,**kwargs)
+
+# def s_(*args,**kwargs):
+# 	if not rp.use_jax: return np.s_(*args,**kwargs)
+# 	else: return jnp.s_(*args,**kwargs)
+
+# def nonzero(*args,**kwargs):
+# 	if not rp.use_jax: return np.nonzero(*args,**kwargs)
+# 	else: return jnp.nonzero(*args,**kwargs)
+
+# def where(*args,**kwargs):
+# 	if not rp.use_jax: return np.where(*args,**kwargs)
+# 	else: return jnp.where(*args,**kwargs)
+
+# def indices(*args,**kwargs):
+# 	if not rp.use_jax: return np.indices(*args,**kwargs)
+# 	else: return jnp.indices(*args,**kwargs)
+
+# def ix_(*args,**kwargs):
+# 	if not rp.use_jax: return np.ix_(*args,**kwargs)
+# 	else: return jnp.ix_(*args,**kwargs)
+
+# def ravel_multi_index(*args,**kwargs):
+# 	if not rp.use_jax: return np.ravel_multi_index(*args,**kwargs)
+# 	else: return jnp.ravel_multi_index(*args,**kwargs)
+
+# def unravel_index(*args,**kwargs):
+# 	if not rp.use_jax: return np.unravel_index(*args,**kwargs)
+# 	else: return jnp.unravel_index(*args,**kwargs)
+
+# def diag_indices(*args,**kwargs):
+# 	if not rp.use_jax: return np.diag_indices(*args,**kwargs)
+# 	else: return jnp.diag_indices(*args,**kwargs)
+
+# def diag_indices_from(*args,**kwargs):
+# 	if not rp.use_jax: return np.diag_indices_from(*args,**kwargs)
+# 	else: return jnp.diag_indices_from(*args,**kwargs)
+
+# def mask_indices(*args,**kwargs):
+# 	if not rp.use_jax: return np.mask_indices(*args,**kwargs)
+# 	else: return jnp.mask_indices(*args,**kwargs)
+
+# def tril_indices(*args,**kwargs):
+# 	if not rp.use_jax: return np.tril_indices(*args,**kwargs)
+# 	else: return jnp.tril_indices(*args,**kwargs)
+
+# def tril_indices_from(*args,**kwargs):
+# 	if not rp.use_jax: return np.tril_indices_from(*args,**kwargs)
+# 	else: return jnp.tril_indices_from(*args,**kwargs)
+
+# def triu_indices(*args,**kwargs):
+# 	if not rp.use_jax: return np.triu_indices(*args,**kwargs)
+# 	else: return jnp.triu_indices(*args,**kwargs)
+
+# def triu_indices_from(*args,**kwargs):
+# 	if not rp.use_jax: return np.triu_indices_from(*args,**kwargs)
+# 	else: return jnp.triu_indices_from(*args,**kwargs)
+
+# def take(*args,**kwargs):
+# 	if not rp.use_jax: return np.take(*args,**kwargs)
+# 	else: return jnp.take(*args,**kwargs)
+
+# def take_along_axis(*args,**kwargs):
+# 	if not rp.use_jax: return np.take_along_axis(*args,**kwargs)
+# 	else: return jnp.take_along_axis(*args,**kwargs)
+
+# def choose(*args,**kwargs):
+# 	if not rp.use_jax: return np.choose(*args,**kwargs)
+# 	else: return jnp.choose(*args,**kwargs)
+
+# def compress(*args,**kwargs):
+# 	if not rp.use_jax: return np.compress(*args,**kwargs)
+# 	else: return jnp.compress(*args,**kwargs)
+
+# def diag(*args,**kwargs):
+# 	if not rp.use_jax: return np.diag(*args,**kwargs)
+# 	else: return jnp.diag(*args,**kwargs)
+
+# def select(*args,**kwargs):
+# 	if not rp.use_jax: return np.select(*args,**kwargs)
+# 	else: return jnp.select(*args,**kwargs)
+
+# def place(*args,**kwargs):
+# 	if not rp.use_jax: return np.place(*args,**kwargs)
+# 	else: return jnp.place(*args,**kwargs)
+
+# def put(*args,**kwargs):
+# 	if not rp.use_jax: return np.put(*args,**kwargs)
+# 	else: return jnp.put(*args,**kwargs)
+
+# def put_along_axis(*args,**kwargs):
+# 	if not rp.use_jax: return np.put_along_axis(*args,**kwargs)
+# 	else: return jnp.put_along_axis(*args,**kwargs)
+
+# def putmask(*args,**kwargs):
+# 	if not rp.use_jax: return np.putmask(*args,**kwargs)
+# 	else: return jnp.putmask(*args,**kwargs)
+
+# def fill_diagonal(*args,**kwargs):
+# 	if not rp.use_jax: return np.fill_diagonal(*args,**kwargs)
+# 	else: return jnp.fill_diagonal(*args,**kwargs)
+
+# def nditer(*args,**kwargs):
+# 	if not rp.use_jax: return np.nditer(*args,**kwargs)
+# 	else: return jnp.nditer(*args,**kwargs)
+
+# def ndenumerate(*args,**kwargs):
+# 	if not rp.use_jax: return np.ndenumerate(*args,**kwargs)
+# 	else: return jnp.ndenumerate(*args,**kwargs)
+
+# def ndindex(*args,**kwargs):
+# 	if not rp.use_jax: return np.ndindex(*args,**kwargs)
+# 	else: return jnp.ndindex(*args,**kwargs)
+
+# def nested_iters(*args,**kwargs):
+# 	if not rp.use_jax: return np.nested_iters(*args,**kwargs)
+# 	else: return jnp.nested_iters(*args,**kwargs)
+
+# def flatiter(*args,**kwargs):
+# 	if not rp.use_jax: return np.flatiter(*args,**kwargs)
+# 	else: return jnp.flatiter(*args,**kwargs)
+
+# def iterable(*args,**kwargs):
+# 	if not rp.use_jax: return np.iterable(*args,**kwargs)
+# 	else: return jnp.iterable(*args,**kwargs)
+
+# def unique(*args,**kwargs):
+# 	if not rp.use_jax: return np.unique(*args,**kwargs)
+# 	else: return jnp.unique(*args,**kwargs)
+
+# def unique_all(*args,**kwargs):
+# 	if not rp.use_jax: return np.unique_all(*args,**kwargs)
+# 	else: return jnp.unique_all(*args,**kwargs)
+
+# def unique_counts(*args,**kwargs):
+# 	if not rp.use_jax: return np.unique_counts(*args,**kwargs)
+# 	else: return jnp.unique_counts(*args,**kwargs)
+
+# def unique_inverse(*args,**kwargs):
+# 	if not rp.use_jax: return np.unique_inverse(*args,**kwargs)
+# 	else: return jnp.unique_inverse(*args,**kwargs)
+
+# def unique_values(*args,**kwargs):
+# 	if not rp.use_jax: return np.unique_values(*args,**kwargs)
+# 	else: return jnp.unique_values(*args,**kwargs)
+
+# def in1d(*args,**kwargs):
+# 	if not rp.use_jax: return np.in1d(*args,**kwargs)
+# 	else: return jnp.in1d(*args,**kwargs)
+
+# def intersect1d(*args,**kwargs):
+# 	if not rp.use_jax: return np.intersect1d(*args,**kwargs)
+# 	else: return jnp.intersect1d(*args,**kwargs)
+
+# def isin(*args,**kwargs):
+# 	if not rp.use_jax: return np.isin(*args,**kwargs)
+# 	else: return jnp.isin(*args,**kwargs)
+
+# def setdiff1d(*args,**kwargs):
+# 	if not rp.use_jax: return np.setdiff1d(*args,**kwargs)
+# 	else: return jnp.setdiff1d(*args,**kwargs)
+
+# def setxor1d(*args,**kwargs):
+# 	if not rp.use_jax: return np.setxor1d(*args,**kwargs)
+# 	else: return jnp.setxor1d(*args,**kwargs)
+
+# def union1d(*args,**kwargs):
+# 	if not rp.use_jax: return np.union1d(*args,**kwargs)
+# 	else: return jnp.union1d(*args,**kwargs)
+
+# def sort(*args,**kwargs):
+# 	if not rp.use_jax: return np.sort(*args,**kwargs)
+# 	else: return jnp.sort(*args,**kwargs)
+
+# def lexsort(*args,**kwargs):
+# 	if not rp.use_jax: return np.lexsort(*args,**kwargs)
+# 	else: return jnp.lexsort(*args,**kwargs)
+
+# def argsort(*args,**kwargs):
+# 	if not rp.use_jax: return np.argsort(*args,**kwargs)
+# 	else: return jnp.argsort(*args,**kwargs)
+
+# def sort_complex(*args,**kwargs):
+# 	if not rp.use_jax: return np.sort_complex(*args,**kwargs)
+# 	else: return jnp.sort_complex(*args,**kwargs)
+
+# def partition(*args,**kwargs):
+# 	if not rp.use_jax: return np.partition(*args,**kwargs)
+# 	else: return jnp.partition(*args,**kwargs)
+
+# def argpartition(*args,**kwargs):
+# 	if not rp.use_jax: return np.argpartition(*args,**kwargs)
+# 	else: return jnp.argpartition(*args,**kwargs)
+
+# def argmax(*args,**kwargs):
+# 	if not rp.use_jax: return np.argmax(*args,**kwargs)
+# 	else: return jnp.argmax(*args,**kwargs)
+
+# def nanargmax(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanargmax(*args,**kwargs)
+# 	else: return jnp.nanargmax(*args,**kwargs)
+
+# def argmin(*args,**kwargs):
+# 	if not rp.use_jax: return np.argmin(*args,**kwargs)
+# 	else: return jnp.argmin(*args,**kwargs)
+
+# def nanargmin(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanargmin(*args,**kwargs)
+# 	else: return jnp.nanargmin(*args,**kwargs)
+
+# def argwhere(*args,**kwargs):
+# 	if not rp.use_jax: return np.argwhere(*args,**kwargs)
+# 	else: return jnp.argwhere(*args,**kwargs)
+
+# def nonzero(*args,**kwargs):
+# 	if not rp.use_jax: return np.nonzero(*args,**kwargs)
+# 	else: return jnp.nonzero(*args,**kwargs)
+
+# def flatnonzero(*args,**kwargs):
+# 	if not rp.use_jax: return np.flatnonzero(*args,**kwargs)
+# 	else: return jnp.flatnonzero(*args,**kwargs)
+
+# def where(*args,**kwargs):
+# 	if not rp.use_jax: return np.where(*args,**kwargs)
+# 	else: return jnp.where(*args,**kwargs)
+
+# def searchsorted(*args,**kwargs):
+# 	if not rp.use_jax: return np.searchsorted(*args,**kwargs)
+# 	else: return jnp.searchsorted(*args,**kwargs)
+
+# def extract(*args,**kwargs):
+# 	if not rp.use_jax: return np.extract(*args,**kwargs)
+# 	else: return jnp.extract(*args,**kwargs)
+
+# def count_nonzero(*args,**kwargs):
+# 	if not rp.use_jax: return np.count_nonzero(*args,**kwargs)
+# 	else: return jnp.count_nonzero(*args,**kwargs)
+
+# def ptp(*args,**kwargs):
+# 	if not rp.use_jax: return np.ptp(*args,**kwargs)
+# 	else: return jnp.ptp(*args,**kwargs)
+
+# def percentile(*args,**kwargs):
+# 	if not rp.use_jax: return np.percentile(*args,**kwargs)
+# 	else: return jnp.percentile(*args,**kwargs)
+
+# def nanpercentile(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanpercentile(*args,**kwargs)
+# 	else: return jnp.nanpercentile(*args,**kwargs)
+
+# def quantile(*args,**kwargs):
+# 	if not rp.use_jax: return np.quantile(*args,**kwargs)
+# 	else: return jnp.quantile(*args,**kwargs)
+
+# def nanquantile(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanquantile(*args,**kwargs)
+# 	else: return jnp.nanquantile(*args,**kwargs)
+
+# def median(*args,**kwargs):
+# 	if not rp.use_jax: return np.median(*args,**kwargs)
+# 	else: return jnp.median(*args,**kwargs)
+
+# def average(*args,**kwargs):
+# 	if not rp.use_jax: return np.average(*args,**kwargs)
+# 	else: return jnp.average(*args,**kwargs)
+
+# def mean(*args,**kwargs):
+# 	if not rp.use_jax: return np.mean(*args,**kwargs)
+# 	else: return jnp.mean(*args,**kwargs)
+
+# def std(*args,**kwargs):
+# 	if not rp.use_jax: return np.std(*args,**kwargs)
+# 	else: return jnp.std(*args,**kwargs)
+
+# def var(*args,**kwargs):
+# 	if not rp.use_jax: return np.var(*args,**kwargs)
+# 	else: return jnp.var(*args,**kwargs)
+
+# def nanmedian(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanmedian(*args,**kwargs)
+# 	else: return jnp.nanmedian(*args,**kwargs)
+
+# def nanmean(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanmean(*args,**kwargs)
+# 	else: return jnp.nanmean(*args,**kwargs)
+
+# def nanstd(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanstd(*args,**kwargs)
+# 	else: return jnp.nanstd(*args,**kwargs)
+
+# def nanvar(*args,**kwargs):
+# 	if not rp.use_jax: return np.nanvar(*args,**kwargs)
+# 	else: return jnp.nanvar(*args,**kwargs)
+
+# def corrcoef(*args,**kwargs):
+# 	if not rp.use_jax: return np.corrcoef(*args,**kwargs)
+# 	else: return jnp.corrcoef(*args,**kwargs)
+
+# def correlate(*args,**kwargs):
+# 	if not rp.use_jax: return np.correlate(*args,**kwargs)
+# 	else: return jnp.correlate(*args,**kwargs)
+
+# def cov(*args,**kwargs):
+# 	if not rp.use_jax: return np.cov(*args,**kwargs)
+# 	else: return jnp.cov(*args,**kwargs)
+
+# def histogram(*args,**kwargs):
+# 	if not rp.use_jax: return np.histogram(*args,**kwargs)
+# 	else: return jnp.histogram(*args,**kwargs)
+
+# def histogram2d(*args,**kwargs):
+# 	if not rp.use_jax: return np.histogram2d(*args,**kwargs)
+# 	else: return jnp.histogram2d(*args,**kwargs)
+
+# def histogramdd(*args,**kwargs):
+# 	if not rp.use_jax: return np.histogramdd(*args,**kwargs)
+# 	else: return jnp.histogramdd(*args,**kwargs)
+
+# def bincount(*args,**kwargs):
+# 	if not rp.use_jax: return np.bincount(*args,**kwargs)
+# 	else: return jnp.bincount(*args,**kwargs)
+
+# def histogram_bin_edges(*args,**kwargs):
+# 	if not rp.use_jax: return np.histogram_bin_edges(*args,**kwargs)
+# 	else: return jnp.histogram_bin_edges(*args,**kwargs)
+
+# def digitize(*args,**kwargs):
+# 	if not rp.use_jax: return np.digitize(*args,**kwargs)
+# 	else: return jnp.digitize(*args,**kwargs)
+
+# def copyto(*args,**kwargs):
+# 	if not rp.use_jax: return np.copyto(*args,**kwargs)
+# 	else: return jnp.copyto(*args,**kwargs)
+
+# def ndim(*args,**kwargs):
+# 	if not rp.use_jax: return np.ndim(*args,**kwargs)
+# 	else: return jnp.ndim(*args,**kwargs)
+
+# def shape(*args,**kwargs):
+# 	if not rp.use_jax: return np.shape(*args,**kwargs)
+# 	else: return jnp.shape(*args,**kwargs)
+
+# def size(*args,**kwargs):
+# 	if not rp.use_jax: return np.size(*args,**kwargs)
+# 	else: return jnp.size(*args,**kwargs)
+
+# def reshape(*args,**kwargs):
+# 	if not rp.use_jax: return np.reshape(*args,**kwargs)
+# 	else: return jnp.reshape(*args,**kwargs)
+
+# def ravel(*args,**kwargs):
+# 	if not rp.use_jax: return np.ravel(*args,**kwargs)
+# 	else: return jnp.ravel(*args,**kwargs)
+
+# def moveaxis(*args,**kwargs):
+# 	if not rp.use_jax: return np.moveaxis(*args,**kwargs)
+# 	else: return jnp.moveaxis(*args,**kwargs)
+
+# def rollaxis(*args,**kwargs):
+# 	if not rp.use_jax: return np.rollaxis(*args,**kwargs)
+# 	else: return jnp.rollaxis(*args,**kwargs)
+
+# def swapaxes(*args,**kwargs):
+# 	if not rp.use_jax: return np.swapaxes(*args,**kwargs)
+# 	else: return jnp.swapaxes(*args,**kwargs)
+
+# def transpose(*args,**kwargs):
+# 	if not rp.use_jax: return np.transpose(*args,**kwargs)
+# 	else: return jnp.transpose(*args,**kwargs)
+
+# def permute_dims(*args,**kwargs):
+# 	if not rp.use_jax: return np.permute_dims(*args,**kwargs)
+# 	else: return jnp.permute_dims(*args,**kwargs)
+
+# def matrix_transpose(*args,**kwargs):
+# 	if not rp.use_jax: return np.matrix_transpose(*args,**kwargs)
+# 	else: return jnp.matrix_transpose(*args,**kwargs)
+
+# def atleast_1d(*args,**kwargs):
+# 	if not rp.use_jax: return np.atleast_1d(*args,**kwargs)
+# 	else: return jnp.atleast_1d(*args,**kwargs)
+
+# def atleast_2d(*args,**kwargs):
+# 	if not rp.use_jax: return np.atleast_2d(*args,**kwargs)
+# 	else: return jnp.atleast_2d(*args,**kwargs)
+
+# def atleast_3d(*args,**kwargs):
+# 	if not rp.use_jax: return np.atleast_3d(*args,**kwargs)
+# 	else: return jnp.atleast_3d(*args,**kwargs)
+
+# def broadcast(*args,**kwargs):
+# 	if not rp.use_jax: return np.broadcast(*args,**kwargs)
+# 	else: return jnp.broadcast(*args,**kwargs)
+
+# def broadcast_to(*args,**kwargs):
+# 	if not rp.use_jax: return np.broadcast_to(*args,**kwargs)
+# 	else: return jnp.broadcast_to(*args,**kwargs)
+
+# def broadcast_arrays(*args,**kwargs):
+# 	if not rp.use_jax: return np.broadcast_arrays(*args,**kwargs)
+# 	else: return jnp.broadcast_arrays(*args,**kwargs)
+
+# def expand_dims(*args,**kwargs):
+# 	if not rp.use_jax: return np.expand_dims(*args,**kwargs)
+# 	else: return jnp.expand_dims(*args,**kwargs)
+
+# def squeeze(*args,**kwargs):
+# 	if not rp.use_jax: return np.squeeze(*args,**kwargs)
+# 	else: return jnp.squeeze(*args,**kwargs)
+
+# def asanyarray(*args,**kwargs):
+# 	if not rp.use_jax: return np.asanyarray(*args,**kwargs)
+# 	else: return jnp.asanyarray(*args,**kwargs)
+
+# def asmatrix(*args,**kwargs):
+# 	if not rp.use_jax: return np.asmatrix(*args,**kwargs)
+# 	else: return jnp.asmatrix(*args,**kwargs)
+
+# def asfortranarray(*args,**kwargs):
+# 	if not rp.use_jax: return np.asfortranarray(*args,**kwargs)
+# 	else: return jnp.asfortranarray(*args,**kwargs)
+
+# def ascontiguousarray(*args,**kwargs):
+# 	if not rp.use_jax: return np.ascontiguousarray(*args,**kwargs)
+# 	else: return jnp.ascontiguousarray(*args,**kwargs)
+
+# def asarray_chkfinite(*args,**kwargs):
+# 	if not rp.use_jax: return np.asarray_chkfinite(*args,**kwargs)
+# 	else: return jnp.asarray_chkfinite(*args,**kwargs)
+
+# def require(*args,**kwargs):
+# 	if not rp.use_jax: return np.require(*args,**kwargs)
+# 	else: return jnp.require(*args,**kwargs)
+
+# def concatenate(*args,**kwargs):
+# 	if not rp.use_jax: return np.concatenate(*args,**kwargs)
+# 	else: return jnp.concatenate(*args,**kwargs)
+
+# def concat(*args,**kwargs):
+# 	if not rp.use_jax: return np.concat(*args,**kwargs)
+# 	else: return jnp.concat(*args,**kwargs)
+
+# def stack(*args,**kwargs):
+# 	if not rp.use_jax: return np.stack(*args,**kwargs)
+# 	else: return jnp.stack(*args,**kwargs)
+
+# def block(*args,**kwargs):
+# 	if not rp.use_jax: return np.block(*args,**kwargs)
+# 	else: return jnp.block(*args,**kwargs)
+
+# def vstack(*args,**kwargs):
+# 	if not rp.use_jax: return np.vstack(*args,**kwargs)
+# 	else: return jnp.vstack(*args,**kwargs)
+
+# def hstack(*args,**kwargs):
+# 	if not rp.use_jax: return np.hstack(*args,**kwargs)
+# 	else: return jnp.hstack(*args,**kwargs)
+
+# def dstack(*args,**kwargs):
+# 	if not rp.use_jax: return np.dstack(*args,**kwargs)
+# 	else: return jnp.dstack(*args,**kwargs)
+
+# def column_stack(*args,**kwargs):
+# 	if not rp.use_jax: return np.column_stack(*args,**kwargs)
+# 	else: return jnp.column_stack(*args,**kwargs)
+
+# def split(*args,**kwargs):
+# 	if not rp.use_jax: return np.split(*args,**kwargs)
+# 	else: return jnp.split(*args,**kwargs)
+
+# def array_split(*args,**kwargs):
+# 	if not rp.use_jax: return np.array_split(*args,**kwargs)
+# 	else: return jnp.array_split(*args,**kwargs)
+
+# def dsplit(*args,**kwargs):
+# 	if not rp.use_jax: return np.dsplit(*args,**kwargs)
+# 	else: return jnp.dsplit(*args,**kwargs)
+
+# def hsplit(*args,**kwargs):
+# 	if not rp.use_jax: return np.hsplit(*args,**kwargs)
+# 	else: return jnp.hsplit(*args,**kwargs)
+
+# def vsplit(*args,**kwargs):
+# 	if not rp.use_jax: return np.vsplit(*args,**kwargs)
+# 	else: return jnp.vsplit(*args,**kwargs)
+
+# def tile(*args,**kwargs):
+# 	if not rp.use_jax: return np.tile(*args,**kwargs)
+# 	else: return jnp.tile(*args,**kwargs)
+
+# def repeat(*args,**kwargs):
+# 	if not rp.use_jax: return np.repeat(*args,**kwargs)
+# 	else: return jnp.repeat(*args,**kwargs)
+
+# def delete(*args,**kwargs):
+# 	if not rp.use_jax: return np.delete(*args,**kwargs)
+# 	else: return jnp.delete(*args,**kwargs)
+
+# def insert(*args,**kwargs):
+# 	if not rp.use_jax: return np.insert(*args,**kwargs)
+# 	else: return jnp.insert(*args,**kwargs)
+
+# def append(*args,**kwargs):
+# 	if not rp.use_jax: return np.append(*args,**kwargs)
+# 	else: return jnp.append(*args,**kwargs)
+
+# def resize(*args,**kwargs):
+# 	if not rp.use_jax: return np.resize(*args,**kwargs)
+# 	else: return jnp.resize(*args,**kwargs)
+
+# def trim_zeros(*args,**kwargs):
+# 	if not rp.use_jax: return np.trim_zeros(*args,**kwargs)
+# 	else: return jnp.trim_zeros(*args,**kwargs)
+
+# def unique(*args,**kwargs):
+# 	if not rp.use_jax: return np.unique(*args,**kwargs)
+# 	else: return jnp.unique(*args,**kwargs)
+
+# def pad(*args,**kwargs):
+# 	if not rp.use_jax: return np.pad(*args,**kwargs)
+# 	else: return jnp.pad(*args,**kwargs)
+
+# def flip(*args,**kwargs):
+# 	if not rp.use_jax: return np.flip(*args,**kwargs)
+# 	else: return jnp.flip(*args,**kwargs)
+
+# def fliplr(*args,**kwargs):
+# 	if not rp.use_jax: return np.fliplr(*args,**kwargs)
+# 	else: return jnp.fliplr(*args,**kwargs)
+
+# def flipud(*args,**kwargs):
+# 	if not rp.use_jax: return np.flipud(*args,**kwargs)
+# 	else: return jnp.flipud(*args,**kwargs)
+
+# def reshape(*args,**kwargs):
+# 	if not rp.use_jax: return np.reshape(*args,**kwargs)
+# 	else: return jnp.reshape(*args,**kwargs)
+
+# def roll(*args,**kwargs):
+# 	if not rp.use_jax: return np.roll(*args,**kwargs)
+# 	else: return jnp.roll(*args,**kwargs)
+
+# def rot90(*args,**kwargs):
+# 	if not rp.use_jax: return np.rot90(*args,**kwargs)
+# 	else: return jnp.rot90(*args,**kwargs)
+
+
+# def 	lib.npyio.NpzFile	(): raise NotImplementedError
 # def 	rec.array	(): raise NotImplementedError
 # def 	rec.fromarrays	(): raise NotImplementedError
 # def 	rec.fromrecords	(): raise NotImplementedError
@@ -683,177 +1366,10 @@ def 	loadtxt	(): raise NotImplementedError
 # def 	rec.fromfile	(): raise NotImplementedError
 # def 	char.array	(): raise NotImplementedError
 # def 	char.asarray	(): raise NotImplementedError
-def 	arange	(): raise NotImplementedError
-def 	linspace	(): raise NotImplementedError
-def 	logspace	(): raise NotImplementedError
-def 	geomspace	(): raise NotImplementedError
-def 	meshgrid	(): raise NotImplementedError
-def 	mgrid	(): raise NotImplementedError
-def 	ogrid	(): raise NotImplementedError
-def 	diag	(): raise NotImplementedError
-def 	diagflat	(): raise NotImplementedError
-def 	tri	(): raise NotImplementedError
-def 	tril	(): raise NotImplementedError
-def 	triu	(): raise NotImplementedError
-def 	vander	(): raise NotImplementedError
-def 	bmat	(): raise NotImplementedError
-def 	bitwise_and	(): raise NotImplementedError
-def 	bitwise_or	(): raise NotImplementedError
-def 	bitwise_xor	(): raise NotImplementedError
-def 	invert	(): raise NotImplementedError
-def 	bitwise_invert	(): raise NotImplementedError
-def 	left_shift	(): raise NotImplementedError
-def 	bitwise_left_shift	(): raise NotImplementedError
-def 	right_shift	(): raise NotImplementedError
-def 	bitwise_right_shift	(): raise NotImplementedError
-def 	packbits	(): raise NotImplementedError
-def 	unpackbits	(): raise NotImplementedError
-def 	binary_repr	(): raise NotImplementedError
-def 	c_	(): raise NotImplementedError
-def 	r_	(): raise NotImplementedError
-def 	s_	(): raise NotImplementedError
-def 	nonzero	(): raise NotImplementedError
-def 	where	(): raise NotImplementedError
-def 	indices	(): raise NotImplementedError
-def 	ix_	(): raise NotImplementedError
-def 	ravel_multi_index	(): raise NotImplementedError
-def 	unravel_index	(): raise NotImplementedError
-def 	diag_indices	(): raise NotImplementedError
-def 	diag_indices_from	(): raise NotImplementedError
-def 	mask_indices	(): raise NotImplementedError
-def 	tril_indices	(): raise NotImplementedError
-def 	tril_indices_from	(): raise NotImplementedError
-def 	triu_indices	(): raise NotImplementedError
-def 	triu_indices_from	(): raise NotImplementedError
-def 	take	(): raise NotImplementedError
-def 	take_along_axis	(): raise NotImplementedError
-def 	choose	(): raise NotImplementedError
-def 	compress	(): raise NotImplementedError
-def 	diag	(): raise NotImplementedError
-def 	select	(): raise NotImplementedError
-def 	place	(): raise NotImplementedError
-def 	put	(): raise NotImplementedError
-def 	put_along_axis	(): raise NotImplementedError
-def 	putmask	(): raise NotImplementedError
-def 	fill_diagonal	(): raise NotImplementedError
-def 	nditer	(): raise NotImplementedError
-def 	ndenumerate	(): raise NotImplementedError
-def 	ndindex	(): raise NotImplementedError
-def 	nested_iters	(): raise NotImplementedError
-def 	flatiter	(): raise NotImplementedError
-def 	iterable	(): raise NotImplementedError
-def 	unique	(): raise NotImplementedError
-def 	unique_all	(): raise NotImplementedError
-def 	unique_counts	(): raise NotImplementedError
-def 	unique_inverse	(): raise NotImplementedError
-def 	unique_values	(): raise NotImplementedError
-def 	in1d	(): raise NotImplementedError
-def 	intersect1d	(): raise NotImplementedError
-def 	isin	(): raise NotImplementedError
-def 	setdiff1d	(): raise NotImplementedError
-def 	setxor1d	(): raise NotImplementedError
-def 	union1d	(): raise NotImplementedError
-def 	sort	(): raise NotImplementedError
-def 	lexsort	(): raise NotImplementedError
-def 	argsort	(): raise NotImplementedError
 # def 	ndarray.sort	(): raise NotImplementedError
-def 	sort_complex	(): raise NotImplementedError
-def 	partition	(): raise NotImplementedError
-def 	argpartition	(): raise NotImplementedError
-def 	argmax	(): raise NotImplementedError
-def 	nanargmax	(): raise NotImplementedError
-def 	argmin	(): raise NotImplementedError
-def 	nanargmin	(): raise NotImplementedError
-def 	argwhere	(): raise NotImplementedError
-def 	nonzero	(): raise NotImplementedError
-def 	flatnonzero	(): raise NotImplementedError
-def 	where	(): raise NotImplementedError
-def 	searchsorted	(): raise NotImplementedError
-def 	extract	(): raise NotImplementedError
-def 	count_nonzero	(): raise NotImplementedError
-def 	ptp	(): raise NotImplementedError
-def 	percentile	(): raise NotImplementedError
-def 	nanpercentile	(): raise NotImplementedError
-def 	quantile	(): raise NotImplementedError
-def 	nanquantile	(): raise NotImplementedError
-def 	median	(): raise NotImplementedError
-def 	average	(): raise NotImplementedError
-def 	mean	(): raise NotImplementedError
-def 	std	(): raise NotImplementedError
-def 	var	(): raise NotImplementedError
-def 	nanmedian	(): raise NotImplementedError
-def 	nanmean	(): raise NotImplementedError
-def 	nanstd	(): raise NotImplementedError
-def 	nanvar	(): raise NotImplementedError
-def 	corrcoef	(): raise NotImplementedError
-def 	correlate	(): raise NotImplementedError
-def 	cov	(): raise NotImplementedError
-def 	histogram	(): raise NotImplementedError
-def 	histogram2d	(): raise NotImplementedError
-def 	histogramdd	(): raise NotImplementedError
-def 	bincount	(): raise NotImplementedError
-def 	histogram_bin_edges	(): raise NotImplementedError
-def 	digitize	(): raise NotImplementedError
-def 	copyto	(): raise NotImplementedError
-def 	ndim	(): raise NotImplementedError
-def 	shape	(): raise NotImplementedError
-def 	size	(): raise NotImplementedError
-def 	reshape	(): raise NotImplementedError
-def 	ravel	(): raise NotImplementedError
 # def 	ndarray.flat	(): raise NotImplementedError
 # def 	ndarray.flatten	(): raise NotImplementedError
-def 	moveaxis	(): raise NotImplementedError
-def 	rollaxis	(): raise NotImplementedError
-def 	swapaxes	(): raise NotImplementedError
-def 	ndarray.T	(): raise NotImplementedError
-def 	transpose	(): raise NotImplementedError
-def 	permute_dims	(): raise NotImplementedError
-def 	matrix_transpose	(): raise NotImplementedError
-def 	atleast_1d	(): raise NotImplementedError
-def 	atleast_2d	(): raise NotImplementedError
-def 	atleast_3d	(): raise NotImplementedError
-def 	broadcast	(): raise NotImplementedError
-def 	broadcast_to	(): raise NotImplementedError
-def 	broadcast_arrays	(): raise NotImplementedError
-def 	expand_dims	(): raise NotImplementedError
-def 	squeeze	(): raise NotImplementedError
-def 	asarray	(): raise NotImplementedError
-def 	asanyarray	(): raise NotImplementedError
-def 	asmatrix	(): raise NotImplementedError
-def 	asfortranarray	(): raise NotImplementedError
-def 	ascontiguousarray	(): raise NotImplementedError
-def 	asarray_chkfinite	(): raise NotImplementedError
-def 	require	(): raise NotImplementedError
-def 	concatenate	(): raise NotImplementedError
-def 	concat	(): raise NotImplementedError
-def 	stack	(): raise NotImplementedError
-def 	block	(): raise NotImplementedError
-def 	vstack	(): raise NotImplementedError
-def 	hstack	(): raise NotImplementedError
-def 	dstack	(): raise NotImplementedError
-def 	column_stack	(): raise NotImplementedError
-def 	split	(): raise NotImplementedError
-def 	array_split	(): raise NotImplementedError
-def 	dsplit	(): raise NotImplementedError
-def 	hsplit	(): raise NotImplementedError
-def 	vsplit	(): raise NotImplementedError
-def 	tile	(): raise NotImplementedError
-def 	repeat	(): raise NotImplementedError
-def 	delete	(): raise NotImplementedError
-def 	insert	(): raise NotImplementedError
-def 	append	(): raise NotImplementedError
-def 	resize	(): raise NotImplementedError
-def 	trim_zeros	(): raise NotImplementedError
-def 	unique	(): raise NotImplementedError
-def 	pad	(): raise NotImplementedError
-def 	flip	(): raise NotImplementedError
-def 	fliplr	(): raise NotImplementedError
-def 	flipud	(): raise NotImplementedError
-def 	reshape	(): raise NotImplementedError
-def 	roll	(): raise NotImplementedError
-def 	rot90	(): raise NotImplementedError
-
-# def 	lib.npyio.NpzFile	(): raise NotImplementedError
+# def 	ndarray.T	(): raise NotImplementedError
 # def 	ndarray.tofile	(): raise NotImplementedError
 # def 	ndarray.tolist	(): raise NotImplementedError
 # def 	lib.format.open_memmap	(): raise NotImplementedError

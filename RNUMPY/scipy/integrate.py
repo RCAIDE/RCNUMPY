@@ -15,6 +15,8 @@ np  = rp.numpy_handle
 sp  = rp.scipy_handle
 jnp = j.numpy
 
-
-
-def trapezoid(): raise NotImplementedError 
+def trapezoid(y, x=None, dx=1.0, axis=-1): 
+    if not rp.use_jax: return np.trapezoid(y=y, x=x, dx=dx, axis=axis)
+    else: return jnp.trapezoid(y=y, x=x, dx=dx, axis=axis)
+    
+     

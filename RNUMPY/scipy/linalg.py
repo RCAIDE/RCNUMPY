@@ -14,10 +14,12 @@ j   = rp.jax_handle
 np  = rp.numpy_handle
 sp  = rp.scipy_handle
 jnp = j.numpy
-
-#def dot(x,y):
-    #if not rp.use_jax: return np.dot(x,y)
-    #else: return jnp.dot(x,y)
+ 
+    
+#def trapezoid( ): 
+    #if not rp.use_jax: return np.trapezoid( )
+    #else: return jnp.trapezoid( )
+        
                          
 def block_diag():       raise NotImplementedError 
 def cho_factor():       raise NotImplementedError 

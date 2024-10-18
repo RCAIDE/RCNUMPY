@@ -13,7 +13,14 @@ import RNUMPY as rp
 j   = rp.jax_handle
 np  = rp.numpy_handle
 sp  = rp.scipy_handle
-jnp = j.numpy 
+jnp = j.numpy
+
+
+    
+#def trapezoid( ): 
+    #if not rp.use_jax: return np.trapezoid( )
+    #else: return jnp.trapezoid( )
+
 
 def minimize(): raise NotImplementedError  
 def OptimizeResults(): raise NotImplementedError  

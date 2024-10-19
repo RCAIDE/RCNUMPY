@@ -13,16 +13,21 @@ import RNUMPY as rp
 j   = rp.jax_handle
 np  = rp.numpy_handle
 sp  = rp.scipy_handle
-jnp = j.numpy
-
-#def dot(x,y):
-    #if not rp.use_jax: return np.dot(x,y)
-    #else: return jnp.dot(x,y)
+jnp = j.numpy 
     
 def dct(x,type=2, n=None, axis=-1, norm=None): 
     if not rp.use_jax: return np.dct(x,type=type, n=n, axis=axis, norm=norm)
     else: return jnp.dct(x,type=type,n=n,axis=axis, norm=norm)
-        
-def dctn():  raise NotImplementedError
-def idct():  raise NotImplementedError
-def idctn(): raise NotImplementedError 
+    
+def dctn(x, type=2, s=None, axes=None, norm=None): 
+    if not rp.use_jax: return np.dctn(x,type=type, s=s, axes=axes, norm=norm)
+    else: return jnp.dctn(x, type=type, s=s, axes=axes, norm=norm)
+     
+def idct(x, type=2, n=None, axis=-1, norm=None): 
+    if not rp.use_jax: return np.idct(x, type=type, n=n, axis=axis, norm=norm)
+    else: return jnp.ictn(x, type=type, n=n, axis=axis, norm=norm)
+     
+def idctn(x, type=2, s=None, axes=None, norm=None): 
+    if not rp.use_jax: return np.idctn(x,type=type, s=s, axes=axes, norm=norm)
+    else: return jnp.idctn(x, type=type, s=s, axes=axes, norm=norm)
+   

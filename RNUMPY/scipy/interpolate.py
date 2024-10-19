@@ -16,5 +16,7 @@ sp  = rp.scipy_handle
 jnp = j.numpy
 
 
-
-def 	RegularGridInterpolator	(): raise NotImplementedError 
+def RegularGridInterpolator(points, values, method='linear', bounds_error=False, fill_value= np.nan ): 
+    if not rp.use_jax: return np.RegularGridInterpolator(points = points, values = values, method=method, bounds_error=bounds_error, fill_value=fill_value)
+    else: return jnp.RegularGridInterpolator(points = points, values = values, method=method, bounds_error=bounds_error, fill_value=fill_value )
+ 

@@ -16,6 +16,26 @@ sp  = rp.scipy_handle
 jnp = j.numpy
 
 
+    
+#def trapezoid( ): 
+    #if not rp.use_jax: return np.trapezoid( )
+    #else: return jnp.trapezoid( )
+
+
+    
+        
+    #def trapezoid( ): 
+        #if not rp.use_jax: return np.trapezoid( )
+        #else: return jnp.trapezoid( )
+
+
+        
+            
+        #def trapezoid( ): 
+            #if not rp.use_jax: return np.trapezoid( )
+            #else: return jnp.trapezoid( )
+
+
 def bisgstab():     raise NotImplementedError 
 def cg():           raise NotImplementedError 
 def gmres():        raise NotImplementedError  

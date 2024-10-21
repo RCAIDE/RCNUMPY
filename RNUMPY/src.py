@@ -15,6 +15,8 @@ j   = rp.jax_handle
 np  = rp.numpy_handle
 jnp = j.numpy
 
+from typing import Union
+
 # ----------------------------------------------------------------------------------------------------------------------
 #  Debug Print Function
 # ----------------------------------------------------------------------------------------------------------------------  
@@ -28,36 +30,41 @@ def debugprint(fmt, *args, ordered=False, **kwargs):
 #  .at functions
 # ----------------------------------------------------------------------------------------------------------------------  
 
-def set(a,indices,b):
-    if not rp.use_jax: a[indices] = b; return a 
-    else: return a.at[indices].set(b)
+def set(a,b,start_index,stop=None,step=None):
+    slice_ = slice(start_index,stop,step)
+    if not rp.use_jax: a[slice_] = b; return a 
+    else: return a.at[slice_].set(b)
         
-def get(a,indices):
-    if not rp.use_jax: return a[indices]
-    else: return a.at[indices].get()
+def get(a,start_index,stop=None,step=None):
+    slice_ = slice(start_index,stop,step)
+    if not rp.use_jax: return a[slice_]
+    else: return a.at[slice_].get()
 
-def pequals(a,indices,b):
-    if not rp.use_jax: a[indices] += b; return a
-    else: return a.at[indices].add(b)
+def pequals(a,b,start_index,stop=None,step=None):
+    slice_ = slice(start_index,stop,step)
+    if not rp.use_jax: a[slice_] += b; return a
+    else: return a.at[slice_].add(b)
          
-def sequals(a,indices,b):
-    if not rp.use_jax: a[indices] -= b; return a
-    else: return a.at[indices].minus(b)
+def sequals(a,b,start_index,stop=None,step=None):
+    slice_ = slice(start_index,stop,step)
+    if not rp.use_jax: a[slice_] -= b; return a
+    else: return a.at[slice_].minus(b)
 
-def mequals(a,indices,b):
-    if rp.use_jax: a[indices] *= b; return a
-    else: return a.at[indices].multiply(b)
+def mequals(a,b,start_index,stop=None,step=None):
+    slice_ = slice(start_index,stop,step)
+    if not rp.use_jax: a[slice_] *= b; return a
+    else: return a.at[slice_].multiply(b)
 
-def dequals(a,indices,b):
-    if not rp.use_jax: a[indices] /= b; return a
-    else: return a.at[indices].divide(b)
+def dequals(a,b,start_index,stop=None,step=None):
+    slice_ = slice(start_index,stop,step)
+    if not rp.use_jax: a[slice_] /= b; return a
+    else: return a.at[slice_].divide(b)
 
 # ----------------------------------------------------------------------------------------------------------------------
 #  ndarray
 # ----------------------------------------------------------------------------------------------------------------------  
 
-class ndarray(np.ndarray, j.Array):
-    pass
+ndarray = Union[np.ndarray, jnp.ndarray]
 
 # ----------------------------------------------------------------------------------------------------------------------
 #  Numpy Functions

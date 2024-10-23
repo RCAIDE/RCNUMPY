@@ -10,9 +10,9 @@
 
 from .fft         import *
 from .integrate   import *
-from .interpolate import  *
-from .linalg      import  *
-from .optimize    import  *
+from .interpolate import *
+from .linalg      import *
+from .optimize    import *
 from .special     import * 
 from .src         import *
 from .            import sparse

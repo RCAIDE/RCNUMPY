@@ -15,6 +15,18 @@ np  = rp.numpy_handle
 sp  = rp.scipy_handle
 jnp = j.numpy 
 
+def fresnel(x): 
+    if not rp.use_jax: return np.fresnel(x)
+    else: return jnp.fresnel(x)
+    
+def factorial(n, exact=False): 
+    if not rp.use_jax: return np.factorial(n, exact=exact)
+    else: return jnp.factorial(n, exact=exact)
+    
+def gamma(x): 
+    if not rp.use_jax: return np.gamma(x)
+    else: return jnp.gamma(x) 
+
 def bernoilli():    raise NotImplementedError
 def beta():         raise NotImplementedError
 def betainc():      raise NotImplementedError
@@ -28,9 +40,6 @@ def exp1():         raise NotImplementedError
 def expi():         raise NotImplementedError
 def expit():        raise NotImplementedError
 def expn():         raise NotImplementedError 
-def factorial():    raise NotImplementedError
-def fresnel():      raise NotImplementedError
-def gamma ():       raise NotImplementedError
 def gammainc():     raise NotImplementedError
 def gammaincc():    raise NotImplementedError
 def gammaln():      raise NotImplementedError
@@ -40,7 +49,6 @@ def i0():           raise NotImplementedError
 def i0e():          raise NotImplementedError
 def i1():           raise NotImplementedError
 def i1e():          raise NotImplementedError
-def jv():           raise NotImplementedError
 def kl_div():       raise NotImplementedError
 def log_ndtr():     raise NotImplementedError
 def log_softmax():  raise NotImplementedError

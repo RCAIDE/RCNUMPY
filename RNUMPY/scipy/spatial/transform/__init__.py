@@ -1,20 +1,11 @@
-# src.py
+# __init__.py
 # (c) Copyright 2024 Aerospace Research Community LLC
 
-# Created:  Oct 2024 M. Clarke
-# Modified: 
+# Created: Oct 2024 M. Clarke
 
 # ----------------------------------------------------------------------------------------------------------------------
 #  IMPORTS
 # ----------------------------------------------------------------------------------------------------------------------  
 
-import RNUMPY as rp
-
-j   = rp.jax_handle
-np  = rp.numpy_handle
-sp  = rp.scipy_handle
-jnp = j.numpy 
-
-def bisgstab():     raise NotImplementedError 
-def cg():           raise NotImplementedError 
-def gmres():        raise NotImplementedError  
+from .Rotation  import *
+from .Slerp     import * 

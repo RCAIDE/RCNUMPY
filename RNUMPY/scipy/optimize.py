@@ -14,13 +14,12 @@ j   = rp.jax_handle
 np  = rp.numpy_handle
 sp  = rp.scipy_handle
 jnp = j.numpy
-
-
+  
+def minimize(fun, x0, args=(), *, method='BFGS', tol=None, options=None): 
+    if not rp.use_jax: return np.minimize(fun, x0, args=args, method=method,tol=tol, options=options)
+    else: return jnp.minimize(fun, x0, args=args,method=method, tol=tol, options=options)
     
-#def trapezoid( ): 
-    #if not rp.use_jax: return np.trapezoid( )
-    #else: return jnp.trapezoid( )
-
-
-def minimize(): raise NotImplementedError  
-def OptimizeResults(): raise NotImplementedError  
+def OptimizeResults(x, success, status, fun, jac, hess_inv, nfev, njev, nit): 
+    if not rp.use_jax: return np.OptimizeResults(x, success, status, fun, jac, hess_inv, nfev, njev, nit)
+    else: return jnp.OptimizeResults(x, success, status, fun, jac, hess_inv, nfev, njev, nit)
+ 

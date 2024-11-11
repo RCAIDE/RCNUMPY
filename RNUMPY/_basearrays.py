@@ -4,6 +4,8 @@
 # Created:  Nov 2024 E. Botero
 # Modified: 
 
+import numpy as np
+
 # ----------------------------------------------------------------------------------------------------------------------
 #  Basic Array Setup, a la JAX
 # ----------------------------------------------------------------------------------------------------------------------  
@@ -66,11 +68,11 @@ class _IndexUpdateRef:
 
     def min(self, values, *, indices_are_sorted=False, unique_indices=False,
             mode=None):
-        self.array[self.index] = np.minimum(x[self.index],y)
+        self.array[self.index] = np.minimum(self.array[self.index],values)
 
     def max(self, values, *, indices_are_sorted=False, unique_indices=False,
             mode=None):
-        self.array[self.index] = np.maximum(x[self.index],y)
+        self.array[self.index] = np.maximum(self.arrays[self.index],values)
   
 
 _array_operators = {}

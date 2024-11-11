@@ -10,8 +10,6 @@
 
 import RNUMPY as rp
 import warnings
-import abc
-from functools import wraps
 from typing import cast
 
 j   = rp.jax_handle
@@ -656,14 +654,9 @@ def full_like(a, fill_value, dtype=None, shape=None, *, device=None):
     else: return jnp.full_like(a, fill_value, dtype=dtype, shape=shape, device=device)
 
 def array(object, dtype=None, copy=True, order='K', ndmin=0, *, device=None):
-    if not rp.use_jax:
-        out = np.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin)
-        return NumpyArray(out)
-    else:
-        out = jnp.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin, device=device)
-        return cast(JaxArray,out)
-
-
+    if not rp.use_jax: return NumpyArray(np.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin))
+    else: return cast(JaxArray,jnp.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin, device=device))
+        
 def asarray(a, dtype=None, order=None, *, copy=None, device=None):
     if not rp.use_jax: return np.asanyarray(a, dtype=dtype, order=order, device=device, copy=copy)
     else: return jnp.asarray(a, dtype=dtype, order=order, copy=copy, device=device)

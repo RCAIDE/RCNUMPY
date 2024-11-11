@@ -10,10 +10,15 @@
 
 import RNUMPY as rp
 import warnings
+import abc
+from functools import wraps
+from typing import cast
 
 j   = rp.jax_handle
 np  = rp.numpy_handle
 jnp = j.numpy
+JaxArray   = rp.JaxArray 
+NumpyArray = rp.NumpyArray
 
 from typing import Union
 
@@ -27,44 +32,13 @@ def debugprint(fmt, *args, ordered=False, **kwargs):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
-#  .at functions
-# ----------------------------------------------------------------------------------------------------------------------  
-
-def set(a,b,start_index,stop=None,step=None):
-    slice_ = slice(start_index,stop,step)
-    if not rp.use_jax: a[slice_] = b; return a 
-    else: return a.at[slice_].set(b)
-        
-def get(a,start_index,stop=None,step=None):
-    slice_ = slice(start_index,stop,step)
-    if not rp.use_jax: return a[slice_]
-    else: return a.at[slice_].get()
-
-def pequals(a,b,start_index,stop=None,step=None):
-    slice_ = slice(start_index,stop,step)
-    if not rp.use_jax: a[slice_] += b; return a
-    else: return a.at[slice_].add(b)
-         
-def sequals(a,b,start_index,stop=None,step=None):
-    slice_ = slice(start_index,stop,step)
-    if not rp.use_jax: a[slice_] -= b; return a
-    else: return a.at[slice_].minus(b)
-
-def mequals(a,b,start_index,stop=None,step=None):
-    slice_ = slice(start_index,stop,step)
-    if not rp.use_jax: a[slice_] *= b; return a
-    else: return a.at[slice_].multiply(b)
-
-def dequals(a,b,start_index,stop=None,step=None):
-    slice_ = slice(start_index,stop,step)
-    if not rp.use_jax: a[slice_] /= b; return a
-    else: return a.at[slice_].divide(b)
-
-# ----------------------------------------------------------------------------------------------------------------------
 #  ndarray
 # ----------------------------------------------------------------------------------------------------------------------  
 
-ndarray = Union[np.ndarray, jnp.ndarray]
+try:
+    ndarray = Union[np.ndarray, jnp.ndarray]
+except:
+    ndarray = np.ndarray
 
 # ----------------------------------------------------------------------------------------------------------------------
 #  Numpy Functions
@@ -206,20 +180,28 @@ def trunc(x):
     if not rp.use_jax: return np.trunc(x)
     else: return jnp.trunc(x)
 
+
+
 def prod(a, axis=None, dtype=None, out=None, keepdims=False, initial=None, where=None, promote_integers=True):
     if not rp.use_jax: return np.prod(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
     else: return jnp.prod(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where,promote_integers=promote_integers)
 
 def sum(a, axis=None, dtype=None, out=None, keepdims=False, initial=None, where=None, promote_integers=True):
-    if not rp.use_jax: return np.sum(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
+    if not rp.use_jax:
+         if initial is None: initial=np._NoValue
+         return np.sum(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
     else: return jnp.sum(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where,promote_integers=promote_integers)
 
 def nanprod(a, axis=None, dtype=None, out=None, keepdims=False, initial=None, where=None, promote_integers=True):
-    if not rp.use_jax: return np.nanprod(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
+    if not rp.use_jax: 
+        if initial is None: initial=np._NoValue
+        return np.nanprod(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
     else: return jnp.nanprod(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where,promote_integers=promote_integers)
 
 def nansum(a, axis=None, dtype=None, out=None, keepdims=False, initial=None, where=None, promote_integers=True):
-    if not rp.use_jax: return np.nansum(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
+    if not rp.use_jax: 
+        if initial is None: initial=np._NoValue
+        return np.nansum(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where)
     else: return jnp.nansum(a,axis=axis,dtype=dtype,out=out,keepdims=keepdims,initial=initial,where=where,promote_integers=promote_integers)
 
 def cumprod(a, axis=None, dtype=None, out=None):
@@ -674,8 +656,13 @@ def full_like(a, fill_value, dtype=None, shape=None, *, device=None):
     else: return jnp.full_like(a, fill_value, dtype=dtype, shape=shape, device=device)
 
 def array(object, dtype=None, copy=True, order='K', ndmin=0, *, device=None):
-    if not rp.use_jax: return np.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin)
-    else: return jnp.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin, device=device)
+    if not rp.use_jax:
+        out = np.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin)
+        return NumpyArray(out)
+    else:
+        out = jnp.array(object, dtype=dtype, copy=copy, order=order, ndmin=ndmin, device=device)
+        return cast(JaxArray,out)
+
 
 def asarray(a, dtype=None, order=None, *, copy=None, device=None):
     if not rp.use_jax: return np.asanyarray(a, dtype=dtype, order=order, device=device, copy=copy)
@@ -764,6 +751,40 @@ def vander(x, N=None, increasing=False):
 	else: return jnp.vander(x, N=N, increasing=increasing)
 
 def bmat(): raise NotImplementedError
+
+
+def all	(a, axis=None, out=None, keepdims=False, *, where=None): raise NotImplementedError
+def 	any	(): raise NotImplementedError
+def 	isfinite	(): raise NotImplementedError
+def 	isinf	(): raise NotImplementedError
+
+def isnan(x,/):
+    if not rp.use_jax: return np.isnan(x)
+    else: return jnp.isnan(x)
+
+def 	isnat	(): raise NotImplementedError
+def 	isneginf	(): raise NotImplementedError
+def 	isposinf	(): raise NotImplementedError
+def 	iscomplex	(): raise NotImplementedError
+def 	iscomplexobj	(): raise NotImplementedError
+def 	isfortran	(): raise NotImplementedError
+def 	isreal	(): raise NotImplementedError
+def 	isrealobj	(): raise NotImplementedError
+def 	isscalar	(): raise NotImplementedError
+def 	logical_and	(): raise NotImplementedError
+def 	logical_or	(): raise NotImplementedError
+def 	logical_not	(): raise NotImplementedError
+def 	logical_xor	(): raise NotImplementedError
+def 	allclose	(): raise NotImplementedError
+def 	isclose	(): raise NotImplementedError
+def 	array_equal	(): raise NotImplementedError
+def 	array_equiv	(): raise NotImplementedError
+def 	greater	(): raise NotImplementedError
+def 	greater_equal	(): raise NotImplementedError
+def 	less	(): raise NotImplementedError
+def 	less_equal	(): raise NotImplementedError
+def 	equal	(): raise NotImplementedError
+def 	not_equal	(): raise NotImplementedError
 
 def bitwise_and(*args,**kwargs): raise NotImplementedError
 # 	if not rp.use_jax: return np.bitwise_and(*args,**kwargs)

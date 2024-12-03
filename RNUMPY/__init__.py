@@ -8,12 +8,14 @@
 #  Package Imports
 # ----------------------------------------------------------------------------------------------------------------------  
 
+import warnings
 import numpy as np
 import scipy as sp
 try:
     import jax as jax
     from jax import Array as jarray
-except:
+except ImportError:
+    warnings.warn("The optional package, JAX is not installed. Autograd and JIT are unavailable", ImportWarning)
     jax = None
     jarray = None
 

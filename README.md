@@ -13,7 +13,7 @@
 - Prototyping JAX-based projects without committing to the full ecosystem immediately.
 
 ## Installation
-To install **RNUMPY**, use pip:
+To install RNUMPY, use pip. **This will not install JAX**. To install JAX as well, please see the official instructions here: [JAX Install](https://github.com/jax-ml/jax?tab=readme-ov-file#installation).
 
 ```pip install rnp```
 

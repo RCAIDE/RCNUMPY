@@ -15,12 +15,24 @@
 ## Installation
 To install **RNUMPY**, use pip:
 
-```bash
-pip install jnp```
+```pip install jnp```
 
 ## Usage Examples
 
-### Example 1: Basic Operations
+### Example: Basic Operations
+Original JAX code:
+```python
+import jax.numpy as jnp
+
+# Compatible with both JAX and NumPy
+x = jnp.array([1, 2, 3])
+y = jnp.array([4, 5, 6])
+
+# Perform operations
+dot_product = np.dot(x, y)
+print(dot_product)
+```
+RNUMPY equivalent:
 ```python
 import RNUMPY as rnp
 
@@ -30,32 +42,22 @@ y = rnp.array([4, 5, 6])
 
 # Perform operations
 dot_product = rnp.dot(x, y)
-print(dot_product)  # Output will match JAX or NumPy's behavior
+print(dot_product)  # Output will match JAX
 ```
 
-### Example 2: Special Functions
+To use NumPy only:
 ```python
 import RNUMPY as rnp
 
+rnp.use_jax = False
+
+# Compatible with both JAX and NumPy
 x = rnp.array([1, 2, 3])
 y = rnp.array([4, 5, 6])
-x = rnp.array([7, 8, 9])
 
-result = rnp.multidot(x, y, z)
-print(result)
-```
-
-In the above case, this function is being called under the hood based on whether or not JAX is being used.
-
-```python
-
-jl = jnp.linalg
-nl = np.linalg
-
-def multi_dot(arrays, *, precision=None):
-    if not rp.use_jax: return nl.multi_dot(arrays, out=precision)
-    else: return jl.multi_dot(arrays, precision=precision)
-
+# Perform operations
+dot_product = rnp.dot(x, y)
+print(dot_product)  # Output will match NumPy
 ```
 
 ## Ethos

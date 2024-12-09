@@ -73,10 +73,10 @@ Contributions are welcome! If you spot inconsistencies with JAX’s API, have fe
 ## RNP Todos:
 
 RNUMPY has all the basic JAX Numpy features, except the following, which are works in progress. There are no inherent technical challenges, this project is in a beta state. We welcome pull requests to finish these area.
-	ufuncs
-	mgrid/ogrids, c_, r_, s_
-	bitwise operators
-	isinf/isnan etc..
-	Set Routines
-	Most of the Scipy folder
+	*ufuncs
+	*mgrid/ogrids, c_, r_, s_
+	*bitwise operators
+	*isinf/isnan etc..
+	*Set Routines
+	*Most of the Scipy folder
 We stubbed out these functions, so you will find a NotImplementedError if you try calling these.

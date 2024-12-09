@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel","numpy","scipy"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'RNUMPY'
+version = "0.0.1"
+description = 'Research Numpy: run either JAX or standard Numpy from a common interface',
+author = 'Aerospace Research Community Team',
+readme = "README.md"
+python_requires='>=3.10',
+dependencies = ['numpy','scipy'],
+
+
+[project.urls]
+Homepage = "https://github.com/RCAIDE/RNUMPY"
+Issues = "https://github.com/RCAIDE/RNUMPY/issues"
+

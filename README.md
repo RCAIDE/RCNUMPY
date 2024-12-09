@@ -28,7 +28,7 @@ x = jnp.array([1, 2, 3])
 y = jnp.array([4, 5, 6])
 
 # Perform operations
-dot_product = np.dot(x, y)
+dot_product = jnp.dot(x, y)
 print(dot_product)
 ```
 RNUMPY equivalent:
@@ -48,6 +48,7 @@ To use NumPy only:
 ```python
 import RNUMPY as rnp
 
+# rnp defaults to JAX unless told otherwise, change at anytime
 rnp.use_jax = False
 
 # Compatible with both JAX and NumPy
@@ -69,3 +70,13 @@ RNUMPY aims to be:
 ## Contributions
 Contributions are welcome! If you spot inconsistencies with JAX’s API, have feature requests, or want to help maintain parity with JAX updates, feel free to open an issue or submit a pull request.
 
+## RNP Todos:
+
+RNUMPY has all the basic JAX Numpy features, except the following, which are works in progress. There are no inherent technical challenges, this project is in a beta state. We welcome pull requests to finish these area.
+	ufuncs
+	mgrid/ogrids, c_, r_, s_
+	bitwise operators
+	isinf/isnan etc..
+	Set Routines
+	Most of the Scipy folder
+We stubbed out these functions, so you will find a NotImplementedError if you try calling these.

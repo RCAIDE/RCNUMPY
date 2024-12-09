@@ -24,7 +24,6 @@ Original JAX code:
 ```python
 import jax.numpy as jnp
 
-# Compatible with both JAX and NumPy
 x = jnp.array([1, 2, 3])
 y = jnp.array([4, 5, 6])
 

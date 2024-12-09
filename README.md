@@ -15,7 +15,7 @@
 ## Installation
 To install **RNUMPY**, use pip:
 
-```pip install jnp```
+```pip install rnp```
 
 ## Usage Examples
 

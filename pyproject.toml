@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel", "numpy", "scipy"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "RNUMPY"
+name = "rnp"
 version = "0.1.0"
 description = "Research Numpy: run either JAX or standard Numpy from a common interface"
 authors = [{ name = "Aerospace Research Community Team" }]

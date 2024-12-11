@@ -4,9 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = 'RNUMPY'
-version = "0.0.1"
+version = "0.1.0"
 description = 'Research Numpy: run either JAX or standard Numpy from a common interface'
+authors = ["Aerospace Research Community Team"]
 readme = "README.md"
+python_requires='>=3.10'
 dependencies = ['numpy','scipy']
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -14,6 +16,11 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta",
 ]
+dynamic = ["requires-python"]
+license = "Apache-2.0"
+maintainers = ["The Developers"]
+dynamic = ["requires-python", "license", "authors", "maintainers"]
+
 
 
 [project.urls]

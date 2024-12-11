@@ -16,7 +16,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta",
 ]
-dynamic = ["requires-python"]
 license = "Apache-2.0"
 maintainers = ["The Developers"]
 dynamic = ["requires-python", "license", "authors", "maintainers"]

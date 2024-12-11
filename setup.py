@@ -57,8 +57,6 @@ setup(
     name = 'RNUMPY',
     version = version, 
     description = 'Research Numpy: run either JAX or standard Numpy from a common interface',
-    #author_email = '',
-    url = 'rcaide.org',
     packages = find_packages(),
     include_package_data = True,
     zip_safe  = False,

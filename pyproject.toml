@@ -6,9 +6,7 @@ build-backend = "setuptools.build_meta"
 name = 'RNUMPY'
 version = "0.0.1"
 description = 'Research Numpy: run either JAX or standard Numpy from a common interface'
-author = 'Aerospace Research Community Team'
 readme = "README.md"
-python_requires='>=3.9'
 dependencies = ['numpy','scipy']
 classifiers = [
     "Programming Language :: Python :: 3",
